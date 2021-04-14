@@ -1,9 +1,7 @@
 # Finite_element_time_dependent_solver
 The "main.m" file contains the code of validation 
 
-This code is writen in MATLAB, and it has the ability to solve time 
-
-dependent linear equations.
+This code is written in MATLAB, and it has the ability to solve time-dependent linear diff equations.
 
 The form of the equation that can be solved, the details of the solving 
 
