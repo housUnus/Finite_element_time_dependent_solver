@@ -1,0 +1,41 @@
+
+*************************P2****************************
+tic
+u = @(x,t) x.*(x-4).*(100.*t).*exp(x).*cos(x);
+cl1 = [0 0];
+cl2 = [0 0];
+sll = Solver1D_P2_Ref_T_EDP_a(0,4,0.01,0,1,.01,u,1,5,1);
+sll= sll.CLS(cl1,cl2)
+sll= sll.initialize(0)
+sll= sll.LoopTime();
+sll = sll.erreur();
+sll.er
+toc
+
+*************************P3****************************
+tic
+u = @(x,t) x.*(x-4).*(100.*t).*exp(x).*cos(x);
+cl1 = [0 0];
+cl2 = [0 0];
+sll = Solver1D_P3_Ref_T_EDP_a(0,4,0.01,0,1,0.01,u,1,5,1);
+sll = sll.CLS(cl1,cl2);
+sll = sll.initialize(0);
+sll = sll.LoopTime();
+sll = sll.erreur();
+sll.er
+toc
+
+****************** Not Fixed Conditions Neumann + Dirichlet *************
+tic
+u = @(x,t)x.*t;
+cl1 = [0 0];
+cl2 = [1 1];
+sl = test_notfix_conditions(0,3,0.01,0,1,.01,u,1,5,1);
+sl= sl.CLS(cl1,cl2);
+sl= sl.initialize(0);
+sl= sl.LoopTime();
+sl = sl.erreur();
+sl.er
+toc
+********************************************************
+
