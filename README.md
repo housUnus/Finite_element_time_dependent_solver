@@ -1,7 +1,7 @@
 # Finite_element_time_dependent_solver
 The "main.m" file contains the code of validation 
 
-This programme is writen in MATLAB, and it has the ability to solve time 
+This code is writen in MATLAB, and it has the ability to solve time 
 
 dependent linear equations.
 
@@ -18,7 +18,7 @@ The "main.txt" contains the validation script, it uses time, space
 
 validation and save the error for each one in two excel files.
 
-The programe contains comments to explain each part.	
+The code contains comments to explain each part.	
 
 ** HOW TO USE THE SOLVER **
 
