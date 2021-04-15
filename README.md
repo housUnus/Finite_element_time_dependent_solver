@@ -83,7 +83,7 @@ inserting the boundary conditions, then solve the system.
 
 - sll = sll.erreur() : calculate the error for each point in space and 
 
-time, the store in a variable called "er" of the sll object (sll.er)
+time, they are stored in a variable called "er" of the sll object (sll.er)
 
 
 
