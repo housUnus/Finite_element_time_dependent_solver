@@ -1,33 +1,33 @@
 classdef Solver1D_P2_Ref_T_EDP_a
     properties
-        a;b; %les limites de domaine
-        h; % le pas de l'espace
-        ht; % le pas du temps
-        hadj; % le pas pour le derienrs deux elements au cas de l'adjustement.
-        n; % le nombre des noeuds de l'espace
-        nt; %le nombre des noeuds du temps
-        Ue; % la solution exacte
-        fe; % la fonction seconde membre
-        T; % le matrice des elements (matrice de connectivité)
-        X; % matrice column des cordonnées
-        U;% la fonction approché 
-        K;% matrice global 
-        F;% matrice seconde membre
-        er; % matrice des erreurs
-        ti; % l'index d'un element
-        t0;% l'instant initiale
-        tf; % l'instant finale
-        cl1;% column contient le type de condition au limite gauche et sa valeur 
-        cl2;% column contient le type de condition au limite droite et sa valeur 
-        timeindex; % l'indice de l'instant
-        tInt; % matrice columns des instants
-        mrf; % la condition de l'élement de réference
-        fref; % la matrice de l'element reférence de type (phi*phi)
-        dfref; % la matrice de l'element reférence de type (phi'*phi')
-        mfref; % la matrice de l'element reférence de type (phi*phi')
-        dimEle; % les dimensions de l'element
-        gorder; % l'order du l'approximation du gauss
-        tstepSave; % parametre pour sauvegarder le pas de temps
+        a;b; %the domain boundaries
+        h; %  space step
+        ht; % time step
+        hadj; % step for the last two elements in case of adjustement
+        n; % number of noeuds in space
+        nt; % number of noeuds in time
+        Ue; % exacte solution function
+        fe; % seconde membre function-expression
+        T; % the matrix of elements (connectivity matrix)
+        X; % Column matrix of coordinates
+        U;% The approximate function
+        K;% Global matrix
+        F;% Second member matrix
+        er; % Error matrix
+        ti; % The index of an element
+        t0;% The initial moment
+        tf; % Final moment
+        cl1;% Column holding the type of left boundary condition and its value
+        cl2;% Column holding the type of right boundary condition and its value
+        timeindex; % The index of the current moment
+        tInt; % Matrix columns of instants
+        mrf; % The condition of the reference element
+        fref; % The matrix of the type reference element (phi*phi)
+        dfref; % The matrix of the type reference element (phi'*phi')
+        mfref; % The matrix of the type reference element (phi*phi')
+        dimEle; % The dimensions of the element
+        gorder; % The order of the approximation of the gauss
+        tstepSave; % Parameter to save the time step
          %% ******************************** equation paramters*******************
         v;
         D;
@@ -50,8 +50,8 @@ classdef Solver1D_P2_Ref_T_EDP_a
             obj.Ue = Ue;
             obj.mrf = mrf;
             obj.gorder = order;
-            obj = obj.descritize(); % calcule le nombre des noeuds pour P2 (nombre des noeuds impair)
-            obj = obj.Meshing(); % faire le maillage
+            obj = obj.descritize(); % calcule the number of nodes for P2 (odd number of nodes)r)
+            obj = obj.Meshing(); % do the meshing
             obj = obj.adjust(); %
             obj.U = zeros(obj.n,obj.nt);
             obj.fref =obj.h.*obj.ref();
@@ -170,9 +170,9 @@ classdef Solver1D_P2_Ref_T_EDP_a
              for k=1:t
                   elementKi = obj.localMatrice(k);
        
-                for i=1:3  %boucle sur les numéros locaux
-                     for j=1:3  %boucle sur les numéros locaux
-                           I=2*k+i-2;                            % numéros globaux dans K
+                for i=1:3  %boucle sur les numÃ©ros locaux
+                     for j=1:3  %boucle sur les numÃ©ros locaux
+                           I=2*k+i-2;                            % numÃ©ros globaux dans K
                           J=2*k+j-2;   
                           obj.K(I,J) = obj.K(I,J) + elementKi(i,j);
                       end
@@ -183,7 +183,7 @@ classdef Solver1D_P2_Ref_T_EDP_a
         
          function  ki =  localMatrice(obj,k)
                  
-                %calcule la matrice élémentaire dans l'élément Ti
+                %calcule la matrice Ã©lÃ©mentaire dans l'Ã©lÃ©ment Ti
                 %               Ti
                 %       |-------|--------|
                 %       x1      x2        x3     
@@ -229,7 +229,7 @@ classdef Solver1D_P2_Ref_T_EDP_a
                  
                   elemFi= obj.LocalSecondMatrice(k);
                   
-              for i=1:3  %boucle sur les numéros locaux
+              for i=1:3  %boucle sur les numÃ©ros locaux
                     I=2*k+i-2;           
                    obj.F(I) = obj.F(I) + elemFi(i);
              end
@@ -271,7 +271,7 @@ classdef Solver1D_P2_Ref_T_EDP_a
          end
          
          function y = derv_phi(obj,abc,x)
-            %Retourne la dérivée d'un polynome évaluée en un point
+            %Retourne la dÃ©rivÃ©e d'un polynome Ã©valuÃ©e en un point
             y =polyval(polyder(abc),x);
          end
          
@@ -288,7 +288,7 @@ classdef Solver1D_P2_Ref_T_EDP_a
          end
          
          function y = derv_ref(obj,abc,x)
-            %Retourne la dérivée d'un polynome évaluée en un point
+            %Retourne la dÃ©rivÃ©e d'un polynome Ã©valuÃ©e en un point
             y =polyval(polyder(abc),x);
          end
          
@@ -413,7 +413,7 @@ classdef Solver1D_P2_Ref_T_EDP_a
         %% end of block
         %% display the graph of excate solution with the approximated one
         function dispf(obj)
-            figure('name', 'Comparaision: solutions exacte et approchée ');
+            figure('name', 'Comparaision: solutions exacte et approchÃ©e ');
             i = 1;
             for t = obj.t0:obj.tstepSave:obj.tf
                 title(['t =  ' num2str(t)])
