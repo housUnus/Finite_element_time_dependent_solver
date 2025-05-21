@@ -1,58 +1,77 @@
-# Finite_element_time_dependent_solver
-The "main.m" file contains the code of validation 
+=====================================================
+              MATLAB 1D Time-Dependent PDE Solver
+=====================================================
 
-This code is written in MATLAB, and it has the ability to solve time-dependent linear diff equations.
+This project is written in MATLAB and provides a solver for 1D time-dependent linear equations. It supports two types of shape functions: P2 and P3. The solver includes validation scripts and the ability to perform both time and space convergence analysis.
 
-The form of the equation that can be solved, the details of the solving can be found in the "rapport.pdf".
+-----------------------------------------------------
+FILES
+-----------------------------------------------------
 
-The commands to use will be found in the "commands.txt".
+- main.m         : Contains the main validation script.
+- main.txt       : Contains a validation test using both time and space refinement. Errors are saved into Excel files.
+- rapport.pdf    : Describes the equation being solved and provides details about the numerical method.
+- commands.txt   : Lists the commands and parameters used to run the solver.
+- [P2/P3 Scripts]: Located in the project folder, each script corresponds to a specific shape function.
 
-The project can use two type of shape functions P2 and P3, each one of these shape functions has a script that you can find in the project.
+-----------------------------------------------------
+HOW TO USE THE SOLVER
+-----------------------------------------------------
 
-The "main.txt" contains the validation script, it uses time, space  validation and save the error for each one in two excel files.
+Boundary Conditions:
 
-The code contains comments to explain each part.	
+- cl1: Left-side boundary condition (vector of two values)
+  - First value: 0 for Dirichlet, 1 for Neumann
+  - Second value: Value of u(0) or u'(0)
 
-** HOW TO USE THE SOLVER **
+- cl2: Right-side boundary condition (vector of two values)
+  - First value: 0 for Dirichlet, 1 for Neumann
+  - Second value: Value of u(L) or u'(L)
 
--cl1: the boundary condition row at the left side which contains row values, the first one is for the type of condition (0 for Dirichlet, 1 for Neumann) and the second value is for the value of the function at this point (u(0) for Dirichlet or u'(0) for Neumann)
+Solver Function:
 
--cl2: the boundary condition row at the right side which contains row values, the first one is for the type of condition (0 for Dirichlet, 1 for Neumann) and the second value is for the value of the function at this point (u(L) for Dirichlet or u'(L) for Neumann)
+    Solver1D_P2_Ref_T_EDP_a(a, b, h, t0, tf, ht, u, mrf, gordre, alpha)
 
-- Solver1D_P2_Ref_T_EDP_a(a,b,h,t0,tf,ht,u,mrf,gordre,alpha);
+Parameters:
+    - a      : Left boundary node
+    - b      : Right boundary node
+    - h      : Space step size
+    - t0     : Initial time
+    - tf     : Final time
+    - ht     : Time step size
+    - u      : Exact solution (function handle)
+    - mrf    : Use reference element technique (1) or not (0)
+    - gordre : Gauss quadrature order
+    - alpha  : Coefficient of the PDE (α * du/dt)
 
--- a  : the left side noude
+Example:
 
--- b  : the right side noude
+    sll = Solver1D_P2_Ref_T_EDP_a(0, 4, 0.01, 0, 1, 0.01, u, 1, 5, 1);
 
--- h  : the space step
+Object Methods:
 
--- t0 : the first moment
+    sll = sll.CLS(cl1, cl2)
+        → Store boundary conditions for later use.
 
--- tf : the last moment 
+    sll = sll.initialize(u0)
+        → Initialize the first time step with the initial condition.
 
--- ht : the time step
+    sll = sll.LoopTime()
+        → Loop over time steps:
+            - Assemble local and global matrices
+            - Apply boundary conditions
+            - Solve the system
 
--- u  : the exacte solution
+    sll = sll.erreur()
+        → Compute the error in space and time.
+        → Result stored in: sll.er
 
--- mrf : a parameter to choose between using a solver with a reference element technique (1) or just a normal solving (0)
+-----------------------------------------------------
+NOTES
+-----------------------------------------------------
 
--- gordre : a parameter to choose the order of gauss quadrature approximation 
+- The project includes comments in the MATLAB code to explain each section.
+- Error data is saved in Excel format for both time and space validations.
+- Make sure to define the exact solution function `u(t, x)` and initial condition `u0` before running the solver.
 
--- alpha : a parameter of the EDP equation (alpha*du/dt) (1 or 0)
-
-- sll = Solver1D_P2_Ref_T_EDP_a(0,4,0.01,0,1,.01,u,1,5,1): creation of an object with initialization of the necessary parameters.
-
-- sll= sll.CLS(cl1,cl2) : store the boundry conditions on the object to use them during the post treatement.
-
-- sll= sll.initialize(u0) : initialize the first columns of the approximated solution which contains the initial condition
-
-- sll = sll.LoopTime() : start the post-treatment by starting a loop  through time and calculate the local matrices then global matrices, inserting the boundary conditions, then solving the system.
-
-- sll = sll.erreur() : calculate the error for each point in space and time, they are stored in a variable called "er" of the "sll" object (sll.er)
-
-
-
-
-
-
+-----------------------------------------------------
