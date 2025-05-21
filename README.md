@@ -1,5 +1,7 @@
 =====================================================
+
               MATLAB 1D Time-Dependent PDE Solver
+              
 =====================================================
 
 This project is written in MATLAB and provides a solver for 1D time-dependent linear equations. It supports two types of shape functions: P2 and P3. The solver includes validation scripts and the ability to perform both time and space convergence analysis.
